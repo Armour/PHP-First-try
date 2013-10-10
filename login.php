@@ -2,10 +2,27 @@
 <head>
 	<script language="javascript" src="js/login.js"></script>
 	<script language="javascript">	function RefreshCode(obj){ obj.src = "graph.php?code=" + Math.random(); } </script>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta htt-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 
 <body>
+
+	<?php 
+		//启用SESSION
+		if (!isset($_SESSION)) session_start();
+		
+		//退出登录
+		if (isset($_SESSION['name']) && isset($_GET['action']) && $_GET['action'] == 'logout' ) $_SESSION["name"] = '';
+		
+		//判断是否已经登录
+		if (isset($_SESSION["name"]))
+		{
+			$name = $_SESSION["name"];
+			if ( $name != '')
+				echo "<script>window.location.href='qsc.php';</script>";
+		};
+	?>
+
 <form name="log_user" method="post" action="login_check.php" target="_self">
 <table width="400" height="150" " border="1" align="center" cellpadding="2" cellspacing="1" bordercolor="#FFFFFF" bgcolor="#999999">
 	<tr>	

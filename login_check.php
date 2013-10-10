@@ -5,9 +5,9 @@
 
 <body>
 <?php 
-	function hashit($a)
+	function hashit($c,$a)
 	{
-		$salt="GC_ZXCVBN";  	//salt值
+		$salt="GC_ZXCVBN".$c;  	//salt值
 		$b=$a.$salt;  			//把密码和salt连接
 		$b=md5($b);  			//执行MD5散列
 		return $b;
@@ -26,7 +26,11 @@
 		return $value;
 	}
 	
+	//启用SESSION
 	if (!isset($_SESSION)) session_start();
+	
+	//用于储存已登录的用户名
+	$_SESSION['name'] = '';
 	
 	//如果验证码正确则执行操作
 	if ($_SESSION["checkcode"] == $_POST["code"])
@@ -36,17 +40,19 @@
 		$name = check_input($_POST["name"]);
 		
 		//md5加盐 加密
-		$psw = hashit($_POST["psw"]);
+		$psw = hashit($name,$_POST["psw"]);
 		
-		//连接数据库
-		$link = mysql_connect('localhost', 'gc', 'oioi');
+		//senor.php:  $link = mysql_connect('localhost', 'username', 'password');
+		require '../senor.php';
+		
 		if (!$link)
 		{
 			die('Could not connect: ' . mysql_error());
 		}
+		
 		//选择数据库
-		$query = "use db_reglog";
-		$result = mysql_query($query,$link);
+		mysql_query("set names 'utf8'",$link);
+		mysql_query("use db_reglog",$link);	
 		
 		//执行数据库查询判断是否有此用户名
 		$query = "select * from tb_member where name='$name'";
@@ -67,7 +73,10 @@
 				$_SESSION['name'] = $_POST['name'];
 				include 'qsc.php';
 			} else 
+				
+			//密码错误
 			{
+				$_SESSION['name'] = '';
 				echo "<script type='text/javascript'> alert('密码错误');</script>";
 				echo "<script>window.location.href='login.php';</script>";
 			};	
