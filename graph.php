@@ -1,11 +1,12 @@
 <?php
-	session_start();
+	if (!isset($_SESSION)) session_start();
 	header("content-type:image/png");
 	
 	$image_width=100;   /* 验证码图像的长度 */	
 	$image_height=30; 	/* 验证码图像的高度 */	
 	$random_dots=300;  	/* 干扰点的数量 */
 	srand(microtime()*100000);	 /*设置随机数种子，microtime返回时间戳*/
+	$new_number = '';
 	for($i=0;$i<4;$i++)		/*十六进制的4为验证码的生成*/
 	{
 		$new_number.=dechex(rand(0,15));

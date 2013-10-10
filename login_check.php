@@ -26,17 +26,17 @@
 		return $value;
 	}
 	
-	session_start();
+	if (!isset($_SESSION)) session_start();
 	
 	//如果验证码正确则执行操作
-	if ($_SESSION["checkcode"] == $_POST[code])
+	if ($_SESSION["checkcode"] == $_POST["code"])
 	{
 
 		//防sql注入
-		$name = check_input($_POST[name]);
+		$name = check_input($_POST["name"]);
 		
 		//md5加盐 加密
-		$psw = hashit($_POST[psw]);
+		$psw = hashit($_POST["psw"]);
 		
 		//连接数据库
 		$link = mysql_connect('localhost', 'gc', 'oioi');

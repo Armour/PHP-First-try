@@ -27,23 +27,23 @@
 		return $value;
 	}
 
-	session_start();
+	if (!isset($_SESSION)) session_start();
 	
 	//如果验证码正确则执行操作
-	if ($_SESSION["checkcode"] == $_POST[code])
+	if ($_SESSION["checkcode"] == $_POST["code"])
 	{	
 		//防sql注入
-		$name = check_input($_POST[name]);
-		$realname = check_input($_POST[realname]);
-		$sex = check_input($_POST[sex]);
-		$IDcard = check_input($_POST[IDcard]);
-		$gtel = check_input($_POST[gtel]);
-		$mtel = check_input($_POST[mtel]);
-		$email= check_input($_POST[email]);
-		$home= check_input($_POST[home]);
+		$name = check_input($_POST["name"]);
+		$realname = check_input($_POST["realname"]);
+		$sex = check_input($_POST["sex"]);
+		$IDcard = check_input($_POST["IDcard"]);
+		$gtel = check_input($_POST["gtel"]);
+		$mtel = check_input($_POST["mtel"]);
+		$email= check_input($_POST["email"]);
+		$home= check_input($_POST["home"]);
 		
 		//md5加盐 加密
-		$psw = hashit($_POST[psw]);
+		$psw = hashit($_POST["psw"]);
 		
 		//连接数据库
 		$link = mysql_connect('localhost', 'gc', 'oioi');

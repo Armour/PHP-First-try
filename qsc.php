@@ -5,7 +5,7 @@
 
 <body>
 <?php 
-	session_start();
+	if (!isset($_SESSION)) session_start();
 	echo '欢迎光临禽兽潮！萌萌的'.$_SESSION['name'].'~'; 
 ?>
 </body>
