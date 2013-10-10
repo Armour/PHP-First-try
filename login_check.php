@@ -1,9 +1,6 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<script type="text/javascript"> 
-		function error() { alert("此用户名不存在"); } 
-	</script>
 </head>
 
 <body>
@@ -51,21 +48,34 @@
 		$query = "use db_reglog";
 		$result = mysql_query($query,$link);
 		
-		//执行数据库查询判断是否可以连接
-		$query = "select * from tb_member where name='$name' and psw='$psw'";
+		//执行数据库查询判断是否有此用户名
+		$query = "select * from tb_member where name='$name'";
 		$result = mysql_query($query,$link)or die(mysql_error());
 		$num = mysql_num_rows($result);
 		
-		//连接成功
+		//用户名存在
 		if ($num>0) 
 		{
-			$_SESSION['name'] = $_POST['name'];
-			include 'qsc.php';
+			//执行数据库查询判断是否密码正确
+			$query = "select * from tb_member where name='$name' and psw='$psw'";
+			$result = mysql_query($query,$link)or die(mysql_error());
+			$num = mysql_num_rows($result);
+			
+			//密码正确
+			if ($num>0)
+			{
+				$_SESSION['name'] = $_POST['name'];
+				include 'qsc.php';
+			} else 
+			{
+				echo "<script type='text/javascript'> alert('密码错误');</script>";
+				echo "<script>window.location.href='login.php';</script>";
+			};	
 		} else 
 			
 		//不存在此用户名  返回初始界面选择注册或登录
 		{
-			echo "<script type='text/javascript'> error();</script>";
+			echo "<script type='text/javascript'>  alert('此用户名不存在');</script>";
 			echo "<script>window.location.href='Start.php';</script>";
 		};
 	} else
