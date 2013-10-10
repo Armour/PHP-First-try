@@ -34,10 +34,16 @@
 	{	
 		//防sql注入
 		$name = check_input($_POST[name]);
-		$psw = check_input($_POST[psw]);
+		$realname = check_input($_POST[realname]);
+		$sex = check_input($_POST[sex]);
+		$IDcard = check_input($_POST[IDcard]);
+		$gtel = check_input($_POST[gtel]);
+		$mtel = check_input($_POST[mtel]);
+		$email= check_input($_POST[email]);
+		$home= check_input($_POST[home]);
 		
 		//md5加盐 加密
-		$new_psw = hashit($psw);
+		$psw = hashit($_POST[psw]);
 		
 		//连接数据库
 		$link = mysql_connect('localhost', 'gc', 'oioi');
@@ -60,8 +66,8 @@
 		
 		//添加新用户数据
 		$query ="insert into tb_member(name,psw,realname,sex,IDcard,gtel,mtel,email,home)	
-			 	values('$name','$new_psw','$_POST[realname]','$_POST[sex]','$_POST[IDcard]',
-			 	  	   '$_POST[gtel]','$_POST[mtel]','$_POST[email]','$_POST[home]')";
+			 	values('$name','$psw','$realname','$sex','$IDcard',
+			 	  	   '$gtel','$mtel','$email','$home')";
 		$result =mysql_query($query,$link);
  		mysql_close($link);
 	}	else

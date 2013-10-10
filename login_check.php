@@ -37,10 +37,9 @@
 
 		//防sql注入
 		$name = check_input($_POST[name]);
-		$psw = check_input($_POST[psw]);
 		
 		//md5加盐 加密
-		$new_psw = hashit($psw);
+		$psw = hashit($_POST[psw]);
 		
 		//连接数据库
 		$link = mysql_connect('localhost', 'gc', 'oioi');
@@ -53,7 +52,7 @@
 		$result = mysql_query($query,$link);
 		
 		//执行数据库查询判断是否可以连接
-		$query = "select * from tb_member where name='$name' and psw='$new_psw'";
+		$query = "select * from tb_member where name='$name' and psw='$psw'";
 		$result = mysql_query($query,$link)or die(mysql_error());
 		$num = mysql_num_rows($result);
 		
