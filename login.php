@@ -2,7 +2,7 @@
 <head>
 	<script language="javascript" src="js/login.js"></script>
 	<script language="javascript">	function RefreshCode(obj){ obj.src = "graph.php?code=" + Math.random(); } </script>
-	<meta htt-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 
 <body>
