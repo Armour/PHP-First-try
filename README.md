@@ -1,4 +1,4 @@
 # PHP homework
 ======
 
-#### a simple login and register module written by PHP.
+a simple login and register module written by PHP.
