@@ -1,4 +1,4 @@
-armour
+# PHP homework
 ======
 
-homework 1
+#### a simple login and register module written by PHP.
